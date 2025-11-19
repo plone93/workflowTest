@@ -9,7 +9,7 @@ on:
 # 환경변수 적는곳
 env:
   AZURE_FUNCTIONAPP_NAME: 'TimerFunctionApp1644'  # 배포할 Azure Function App 이름
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'TimerFuncTest' # 프로젝트 폴더 경로
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'TimerFuncTest/TimerFuncTest' # 프로젝트 폴더 경로
   DOTNET_VERSION: '8.0.x'                         # 사용할 .NET 버전
 
 jobs:
