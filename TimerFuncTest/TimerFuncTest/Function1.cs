@@ -22,5 +22,6 @@ public class Function1
         {
             _logger.LogInformation("Next timer schedule at: {nextSchedule}", myTimer.ScheduleStatus.Next);
         }
+
     }
 }
