@@ -1,0 +1,53 @@
+
+name: Deploy DotNet project to Azure Function App
+
+on:
+  #workflow_dispatch:
+  push:
+    branches: ["func_test"]
+    
+# 환경변수 적는곳
+env:
+  AZURE_FUNCTIONAPP_NAME: 'TimerFunctionApp1644'  # 배포할 Azure Function App 이름
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'TimerFuncTest/TimerFuncTest' # 프로젝트 폴더 경로
+  DOTNET_VERSION: '8.0.x'                         # 사용할 .NET 버전
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+    #environment: dev
+    steps:
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@v4
+
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: 'Build .NET Project'
+      shell: pwsh
+      run: |
+        pushd ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        dotnet build TimerFuncTest.csproj --configuration Release --output ./output
+        popd
+
+    - name: 'Verify output folder'
+      run: |
+        ls -R ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output
+
+    - name: 'Create ZIP package'
+      shell: pwsh
+      run: |
+        $outputFolder = '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+        $zipFile = '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/package.zip'
+        if (Test-Path $zipFile) { Remove-Item $zipFile }
+        Compress-Archive -Path "$outputFolder/*" -DestinationPath $zipFile
+        
+    - name: 'Deploy to Azure Functions'
+      uses: Azure/functions-action@v1
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/package.zip'
+        publish-profile: ${{ secrets.AZURE_TIMER_FUNCTIONAPP_PUBLISH_PROFILE }}
+
