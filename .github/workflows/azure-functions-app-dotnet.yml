@@ -36,6 +36,14 @@ jobs:
       run: |
         ls -R ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output
 
+    - name: 'Create ZIP package'
+      shell: pwsh
+      run: |
+        $outputFolder = '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+        $zipFile = '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/package.zip'
+        if (Test-Path $zipFile) { Remove-Item $zipFile }
+        Compress-Archive -Path "$outputFolder/*" -DestinationPath $zipFile
+        
     - name: 'Deploy to Azure Functions'
       uses: Azure/functions-action@v1
       with:
