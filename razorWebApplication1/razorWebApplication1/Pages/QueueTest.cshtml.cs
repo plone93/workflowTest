@@ -30,7 +30,7 @@ namespace razorWebApplication1.Pages
 
             // Retrieve message from Azure Queue Storage
             QueueMessage[] messages = await queueClient.ReceiveMessagesAsync(maxMessages: 1);
-            
+
             // Insert into QUEUETEST table
             using var conn = new OracleConnection(_connectionString);
             conn.Open();

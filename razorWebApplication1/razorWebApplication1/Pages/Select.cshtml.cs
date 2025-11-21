@@ -45,7 +45,7 @@ namespace razorWebApplication1.Pages
                 totalCount = Convert.ToInt32(cmd1.ExecuteScalar());
             }
 
-            
+
 
             using var cmd2 = new OracleCommand("SELECT ID, NAME, PRICE FROM PRODUCT ORDER BY ID OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY", conn);
             cmd2.Parameters.Add(new OracleParameter("offset", offset));

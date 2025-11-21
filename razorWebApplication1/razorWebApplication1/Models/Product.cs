@@ -14,7 +14,7 @@ namespace razorWebApplication1.Models
         [Column("NAME")]
         public string Name { get; set; } = string.Empty;
 
-        [Column("PRICE")] 
+        [Column("PRICE")]
         public decimal Price { get; set; }
 
         public static implicit operator List<object>(Product v)
