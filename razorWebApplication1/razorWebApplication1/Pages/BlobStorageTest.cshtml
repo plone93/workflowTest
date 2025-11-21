@@ -1,0 +1,14 @@
+﻿@page
+@model razorWebApplication1.Pages.BlobStorageTestModel
+@{
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="formFile" class="form-label">file input</label>
+        <input class="form-control" type="file" name="formFile" id="formFile">
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" name="action" value="save" class="btn btn-primary">保存</button>
+    </div>
+</form>

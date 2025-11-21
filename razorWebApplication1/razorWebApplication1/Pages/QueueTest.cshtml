@@ -1,0 +1,15 @@
+﻿@page
+@model razorWebApplication1.Pages.QueueTestModel
+@{
+}
+
+
+<form method="post">
+    <div class="mb-3">
+        <label for="jsonData" class="form-label">jsonData</label>
+        <textarea class="form-control" id="jsonData" name="jsonData" rows="20"></textarea>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" name="action" value="save" class="btn btn-primary">保存</button>
+    </div>
+</form>

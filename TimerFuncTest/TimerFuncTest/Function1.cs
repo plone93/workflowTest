@@ -14,7 +14,7 @@ public class Function1
     }
 
     [Function("Function1")]
-    public void Run([TimerTrigger("0 */1 * * * *")] TimerInfo myTimer)
+    public void Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer)
     {
         _logger.LogInformation("C# Timer trigger function executed at: {executionTime}", DateTime.Now);
         
@@ -22,5 +22,6 @@ public class Function1
         {
             _logger.LogInformation("Next timer schedule at: {nextSchedule}", myTimer.ScheduleStatus.Next);
         }
+
     }
 }
