@@ -1,0 +1,21 @@
+﻿@page
+@model razorWebApplication1.Pages.UpdateModel
+@{
+}
+
+<h2>Edit Product</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="@Model.product.Id" />
+    <div class="mb-3">
+        <label for="name" class="form-label">NAME</label>
+        <input asp-for="product.Name" class="form-control" /><br />
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">PRICE</label>
+        <input asp-for="product.Price" type="number" class="form-control" step="0.01" /><br />
+    </div>
+    <button type="submit" name="action" value="save" class="btn btn-primary">保存</button>
+    <button type="submit" name="action" value="back" class="btn btn-primary">戻る</button>
+    <button type="submit" name="action" value="delete" class="btn btn-primary">削除</button>
+</form>
