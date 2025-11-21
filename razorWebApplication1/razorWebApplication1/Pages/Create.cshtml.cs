@@ -30,25 +30,25 @@ namespace razorWebApplication1.Pages
             return RedirectToPage("Select");
         }
 
-            //private readonly AppDbContext _context;
+        //private readonly AppDbContext _context;
 
 
-            //public CreateModel(AppDbContext context)
-            //{
-            //    _context = context;
-            //}
+        //public CreateModel(AppDbContext context)
+        //{
+        //    _context = context;
+        //}
 
-            //[BindProperty]
-            //public Product Product { get; set; } = new Product();
+        //[BindProperty]
+        //public Product Product { get; set; } = new Product();
 
-            //public async Task<IActionResult> OnPostAsync()
-            //{
-            //    await _context.Database.ExecuteSqlRawAsync(
-            //        "INSERT INTO PRODUCT (NAME, PRICE) VALUES ( :p0, :p1)",
-            //        Product.Name, Product.Price
-            //    );
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    await _context.Database.ExecuteSqlRawAsync(
+        //        "INSERT INTO PRODUCT (NAME, PRICE) VALUES ( :p0, :p1)",
+        //        Product.Name, Product.Price
+        //    );
 
-            //    return RedirectToPage("Index");
-            //}
-        }
+        //    return RedirectToPage("Index");
+        //}
+    }
 }
