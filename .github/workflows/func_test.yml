@@ -1,10 +1,9 @@
-
 name: C# CI - Build, Lint, Test
 
 on:
-  workflow_dispatch:              # 수동 실행 버튼 활성화
   push:
-    branches: ["func_test"]
+  workflow_dispatch:              # 수동 실행 버튼 활성화
+    branches: ["main", "func_test"]
   pull_request:
 
 jobs:
@@ -29,7 +28,7 @@ jobs:
 
       # 코드 스타일 체크
       - name: Check code formatting
-        run: dotnet format --verify-no-changes
+        run: dotnet format ./razorWebApplication1/razorWebApplication1.sln --verify-no-changes
 
       # 빌드
       - name: Build project
