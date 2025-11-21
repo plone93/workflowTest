@@ -9,7 +9,7 @@ on:
 # 공통 환경 변수
 env:
   AZURE_RESOURCE_GROUP: 'azure_study'
-  AZURE_CONTAINERAPP_NAME: 'my-app-job'
+  AZURE_CONTAINERAPP_JOB_NAME : 'my-app-job'
   AZURE_LOCATION: 'eastus'
   CONTAINER_IMAGE_NAME: 'my-app1644'
   ACR_NAME: 'myregistry1644'
@@ -59,6 +59,6 @@ jobs:
       - name: Deploy to Azure Container App
         run: |
           az containerapp job update \
-            --name ${{ env.AZURE_CONTAINERAPP_NAME }} \
+            --name ${{ env.AZURE_CONTAINERAPP_JOB_NAME }} \
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --image ${{ env.IMAGE_TAG }}
