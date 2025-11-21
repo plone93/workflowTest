@@ -40,7 +40,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           IMAGE_TAG=${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME }}:${{ github.sha }}
-          docker build -t $IMAGE_TAG ./razorWebApplication1/razorWebApplicaㄴtion1 # dockerfile 존재해야함
+          docker build -t $IMAGE_TAG ./razorWebApplication1/razorWebApplication1 # dockerfile 존재해야함
           docker push $IMAGE_TAG
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV  # 다음 단계에서 사용
 
