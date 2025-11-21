@@ -27,6 +27,7 @@ namespace razorWebApplication1.Utils
                     });
             });
             var configuration = builder.Build();
+
             // 3. Key-Value 읽기
             string value = configuration[key];
             Console.WriteLine($"Config Value for '{key}': {value}");
