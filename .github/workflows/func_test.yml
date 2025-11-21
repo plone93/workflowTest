@@ -2,6 +2,7 @@
 name: C# CI - Build, Lint, Test
 
 on:
+  workflow_dispatch:              # 수동 실행 버튼 활성화
   push:
     branches: ["func_test"]
   pull_request:
