@@ -21,6 +21,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
+    outputs:
+      image-tag: ${{ steps.set-image.outputs.IMAGE_TAG }}
+      
     steps:
       # 소스코드 체크아웃
       - name: Checkout repository
@@ -42,7 +45,9 @@ jobs:
           IMAGE_TAG=${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME }}:${{ github.sha }}
           docker build -t $IMAGE_TAG ./razorWebApplication1/razorWebApplication1 # dockerfile 존재해야함
           docker push $IMAGE_TAG
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV  # 다음 단계에서 사용
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"  # job output으로 설정
+        id: set-image
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,4 +66,4 @@ jobs:
           az containerapp job update \
             --name ${{ env.AZURE_CONTAINERAPP_JOB_NAME }} \
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
-            --image ${{ env.IMAGE_TAG }}
+            --image ${{ needs.build-and-push.outputs.image-tag }}
