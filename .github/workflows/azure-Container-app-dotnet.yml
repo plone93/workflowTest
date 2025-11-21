@@ -1,0 +1,62 @@
+name: Build and Deploy to Azure Container App
+
+on:
+  push:
+    branches: ["func_test"]       # main 브랜치에 푸시될 때 실행
+  workflow_dispatch:              # 수동 실행 버튼 활성화
+
+env:
+  AZURE_CONTAINERAPP_NAME: 'my-container-app1644'   # Azure Container App 이름
+  AZURE_RESOURCE_GROUP: 'azure_study'               # 리소스 그룹
+  AZURE_LOCATION: 'eastus'                          # 컨테이너 앱 위치
+  CONTAINER_IMAGE_NAME: 'my-app1644'                # 컨테이너 이미지 이름
+  ACR_NAME: 'myregistry1644'                        # Azure Container Registry 이름
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 소스코드 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Azure 로그인 (서비스 프린시펄)
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Azure Container Registry 로그인
+      - name: Log in to Azure Container Registry
+        run: az acr login --name ${{ env.ACR_NAME }}
+
+      # Docker 이미지 빌드 및 푸시
+      - name: Build and push Docker image
+        run: |
+          IMAGE_TAG=${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME }}:${{ github.sha }}
+          docker build -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV  # 다음 단계에서 사용하기 위해 환경 변수 저장
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+
+    steps:
+      # Azure 로그인
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Azure Container App 배포
+      - name: Deploy to Azure Container App
+        run: |
+          az containerapp update \
+            --name ${{ env.AZURE_CONTAINERAPP_NAME }} \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+            --image ${{ env.IMAGE_TAG }}
