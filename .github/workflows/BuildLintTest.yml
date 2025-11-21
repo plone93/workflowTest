@@ -1,0 +1,39 @@
+name: C# CI - Build, Lint, Test
+
+on:
+  workflow_dispatch:              # 수동 실행 버튼 활성화
+  push:
+    branches: ["main", "func_test"]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest   # Linux 환경
+    # runs-on: windows-latest  # Windows 환경 사용 가능
+
+    steps:
+      # 코드 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # .NET SDK 설정
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      # 의존성 복원
+      - name: Restore dependencies
+        run: dotnet restore MyApp.sln
+
+      # 코드 스타일 체크
+      - name: Check code formatting
+        run: dotnet format --verify-no-changes
+
+      # 빌드
+      - name: Build project
+        run: dotnet build MyApp.sln --configuration Release --no-restore
+
+      # 테스트 실행
+      - name: Run tests
+        run: dotnet test MyApp.sln --configuration Release --no-build --verbosity normal
