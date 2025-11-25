@@ -1,0 +1,29 @@
+[project]
+name = "fastapi-project"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "plone93",email = "plone931206@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi (>=0.122.0,<0.123.0)",
+    "uvicorn[standard] (>=0.38.0,<0.39.0)",
+    "starlette (>=0.50.0,<0.51.0)",
+    "python-jose[cryptography] (>=3.5.0,<4.0.0)",
+    "python-multipart (>=0.0.20,<0.0.21)"
+]
+
+[tool.poetry]
+packages = [{include = "fastapi_project", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.1,<10.0.0)",
+    "httpx (>=0.28.1,<0.29.0)"
+]
