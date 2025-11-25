@@ -15,8 +15,6 @@ dependencies = [
     "python-multipart (>=0.0.20,<0.0.21)"
 ]
 
-[tool.poetry]
-packages = [{ include = "fastapi_project", from = "." }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
